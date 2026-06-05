@@ -1,0 +1,122 @@
+eveloper: Gahire Abdilillah | Date: {{CURRENT_DATE}}
+Strictly obey scenario – never add entities/features beyond what scenario requires + mandatory infrastructure below.
+
+Parse Scenario (dynamic)
+Extract: entities, attributes, PK/FK, relationships, auto‑calc, stock logic, CRUD permissions (map {insert,retrieve,update,delete}), auth method (JWT unless “session” → express‑session), report names (exact wording), DB (MySQL/phpMyAdmin/SQL → mysql2+schema.sql; MongoDB/Mongoose → Mongoose; default MySQL).
+Product name from scenario → show on all pages (Navbar, Sidebar header, Landing hero, Footer, browser title).
+
+System Completeness (auto‑generate all, unless scenario forbids)
+Public: Landing, Login, Register, Forgot Password, Unauthorized, 404.
+
+Auth: bcrypt, JWT/session, logout, protected routes.
+
+Admin: Dashboard, Sidebar, Navbar, Footer, Profile, Settings, Reports.
+
+System: loading/error states, toast notifications (react‑hot‑toast) after every CRUD/auth action, inline input errors (red border + message), confirmation modals, axios (JWT header token; session withCredentials), .env, DB connect, seed.
+
+Routing: all, protected, fallback 404.
+
+DB: Users table/model (id, username, password, createdAt; opt: role, email, recoveryCodes). Every entity gets forms & routes per CRUD.
+
+Reports: mandatory, dedicated page + own API/controller/route/nav item. CSV export.
+
+File audit: every page/route/controller/model/repo/validation/nav must exist; if missing → stop & generate first.
+
+Database Engine
+MySQL → database/schema.sql (importable phpMyAdmin: CREATE DATABASE, USE, all tables PK/FK/INDEX, ENGINE=InnoDB DEFAULT CHARSET=utf8mb4), config/db.js (mysql2/promise pool), repositories (raw SQL).
+
+MongoDB → config/db.js (Mongoose), models/ with schemas.
+
+Relationships: 1‑M FK, M‑M junction table + composite PK.
+
+Backend Structure
+text
+backend/
+├── server.js, .env, package.json
+├── config/db.js
+├── database/schema.sql (MySQL only)
+├── models/ (MongoDB) or repositories/ (MySQL)
+├── controllers/ (auth, entities, report)
+├── routes/ (auth, entities, report)
+├── middleware/ (auth, validation)
+├── utils/ (validators, recoveryCodes, stockUpdater)
+├── seed.js
+└── tests/stockUpdate.test.js
+Auth: register → 5 recovery codes XXXX‑XXXX (hash stored, raw returned → frontend modal copy/download). Login JWT (7d) or session. Forgot password → username+code+new password, mark code used.
+Middleware: JWT Bearer verify; session req.session.userId.
+
+Frontend
+React+Vite+Tailwind v4, lucide‑react, react‑router‑dom, axios.
+Font: Google Font “Poppins” (or “Outfit”) via @import, not default sans.
+Toast: react-hot-toast for success/error.
+Input errors: inline red border + message.
+Components: Layout (Sidebar+Navbar+Footer), ProtectedRoute, Modal, AlertBanner.
+Pages: Landing (large “How It Works”, no pros/cons), Login, Register, ForgotPwd, Dashboard, Profile, Unauthorized, NotFound, EntityList/Create/Edit (only if CRUD allows), Report (exact named + CSV export).
+Product name on Navbar, Sidebar, Hero, Footer, browser title.
+No dark mode.
+
+CRUD Enforcement
+Forbidden ops → backend 403, frontend hide buttons/routes.
+
+Validation (both sides)
+Name: /^[A-Za-z]+( [A-Za-z]+)*$/, 2‑50. Username: /^[a-zA-Z0-9_]+$/, 3‑20. Password: min 8, 1 upper, 1 lower, 1 digit, 1 special. Integer ≥0. Money: int ≥0 display .toLocaleString()+" RWF". Date required. Trim & sanitise strings. Phone (if in scenario): 078/079/072/073+7 digits. Plate (if in scenario): /^[A-Z]{1,3} \d{1,4}( [A-Z])?$/.
+
+Landing Page (large, no pros/cons)
+Hero (system name, subtitle, CTA buttons, fade‑in)
+
+How It Works (3‑4 steps, icons, scroll fade‑up)
+
+Feature cards (hover scale)
+
+Why This System? (two‑col, icons)
+
+Trust/Testimonials (optional placeholder)
+
+Call‑to‑action
+
+Footer (Gahire Abdilillah, year)
+Responsive, animations, no dark mode.
+
+Seed
+admin / Admin123! (hashed) + 2‑3 records per entity respecting FK.
+
+Tests
+tests/stockUpdate.test.js – create part, stock in/out, verify qty adjustments, reject over‑consumption, skip forbidden ops.
+
+Documentation (outside code)
+Presentation script (2‑3 min)
+
+SDLC explanation
+
+Frontend explanation (incl. toast, inline errors, Poppins font)
+
+Backend workflow
+
+Report calculation
+
+CRUD permissions table
+
+Exam time‑priority
+
+Stock validation summary
+
+Output Format
+For every file, after the code block add a one‑line comment: // Purpose: <short description of what this file does>. This helps review.
+
+Self‑Check
+[ ] Entities/CRUD/stock/reports/DB parsed
+[ ] DB correct, schema.sql phpMyAdmin‑valid if MySQL
+[ ] Auth method obeyed, recovery codes present
+[ ] All mandatory pages generated
+[ ] Toasts + inline errors everywhere
+[ ] Poppins/Outfit font, no dark mode
+[ ] Product name on all pages
+[ ] Landing large “How It Works”
+[ ] Reports exact wording + CSV
+[ ] File audit passed, no missing files
+[ ] Seed + tests included
+[ ] Documentation sections provided
+[ ] No extra entities beyond scenario + mandatory infrastructure
+
+Scenario: [Paste here]
+BEGIN GENERATION – code + docs as Gahire Abdilillah.
