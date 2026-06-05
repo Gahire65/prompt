@@ -1,0 +1,118 @@
+Developer: Gahire Abdilillah | Date: {{CURRENT_DATE}}
+Strictly obey scenario. Parse dynamically: entities, attributes, PK/FK, relationships, auto‑calc, stock logic, CRUD permissions, auth method (JWT unless “session”→express‑session), report names, roles (if scenario mentions roles, use them; otherwise default roles: admin, manager, user – always implement RBAC unless scenario explicitly says “no roles”). DB: MySQL keywords → mysql2+schema.sql (phpMyAdmin‑ready), MongoDB keywords → Mongoose; default MySQL.
+
+Product name from scenario → display on all pages.
+
+System Completeness (auto‑generate all)
+Public: Landing, Login, Register, ForgotPassword, Unauthorized, 404.
+
+Auth: bcrypt, JWT/session, logout, protected routes, RBAC (role‑based access control).
+
+Admin: Dashboard, Sidebar, Navbar, Footer, Profile, Settings, Reports.
+
+System: loading/error, toast (react‑hot‑toast) after every action, inline input errors, confirmation modals, axios interceptor (JWT token or withCredentials), .env, DB connect, seed.
+
+Routing: all, protected, 404.
+
+Database: Users table/collection with role field mandatory (admin,manager,user). Every entity gets forms/routes per CRUD.
+
+Reports: MANDATORY – dedicated page + API/controller/route/nav, CSV export.
+
+Navigation audit: page↔route↔link must match.
+
+File audit: any missing file → stop, generate it first.
+
+RBAC Implementation (always)
+Roles: parse scenario for custom roles; default admin, manager, user.
+
+Permissions:
+
+Admin: full CRUD on all entities + reports + admin pages.
+
+Manager: typically CRUD on main entities, no user management.
+
+User: limited to read/own records or as scenario defines.
+
+Backend: middleware/rbacMiddleware.js – check req.user.role and compare against allowed roles per route. Return 403 if forbidden.
+
+Frontend: hide sidebar links, buttons, and protect routes based on role (stored in auth context/localStorage).
+
+Seed: create users with each role (admin, manager, user) with passwords.
+
+User model/table must have role field, enum or string.
+
+Backend Structure
+MySQL: database/schema.sql (InnoDB, utf8mb4, users role field), config/db.js (mysql2/pool), repositories/, controllers/, routes/, middleware/ (auth, validation, rbac), utils/, seed.js, tests/stockUpdate.test.js.
+
+MongoDB: config/db.js (Mongoose), models/ (User with role enum), same rest.
+
+Routes protected with authMiddleware + rbacMiddleware(allowedRoles).
+
+Frontend
+React+Vite+Tailwind v4, lucide-react, react-router-dom, axios.
+Font: “Poppins” or “Outfit” (Google Font).
+Components: Layout (Sidebar+Navbar+Footer), ProtectedRoute (checks auth + role), Modal, AlertBanner.
+Pages: Landing (large “How It Works”, no pros/cons), Login, Register (recovery codes modal), ForgotPwd, Dashboard, Profile, Unauthorized, NotFound, EntityList/Create/Edit (if CRUD+role allows), Report (exact named + CSV).
+UI: no dark mode, responsive, animations, product name everywhere, toast & inline errors.
+
+CRUD + RBAC Enforcement
+Backend: controllers check role via rbac middleware; no forbidden endpoints (403). Frontend: ProtectedRoute + conditional rendering based on user role.
+
+Validation (both ends)
+Name /^[A-Za-z]+( [A-Za-z]+)*$/ 2‑50; Username /^[a-zA-Z0-9_]+$/ 3‑20; Password min8 upper+lower+digit+special; Integer ≥0; Money int≥0 display .toLocaleString()+" RWF"; Date required; Trim/sanitize; Phone (if exists) 078‑079‑072‑073+7 digits; Plate (if exists) /^[A-Z]{1,3} \d{1,4}( [A-Z])?$/.
+
+Landing Page (large)
+Hero (system name, subtitle, buttons) fade‑in
+
+How It Works (3‑4 steps, icons, scroll fade‑up)
+
+Feature cards (hover scale)
+
+Why This System? (two‑col, icons)
+
+Trust/Testimonials (optional)
+
+CTA
+
+Footer (Gahire Abdilillah, year)
+
+Seed
+Users: admin (Admin123!), manager (Manager123!), user (User123!) – all hashed. Sample entities per entity (2‑3) respecting FK.
+
+Tests
+tests/stockUpdate.test.js – create part, stock in/out, update/delete if allowed, over‑consumption reject.
+
+Documentation (outside code)
+Presentation script (2‑3 min)
+
+SDLC
+
+Frontend explanation (RBAC UI, toast, Poppins)
+
+Backend workflow (RBAC middleware)
+
+Report calculation
+
+CRUD + roles permission table
+
+Exam time‑priority
+
+Stock validation summary
+
+Output Format
+After every file code block, add // Purpose: <one-line description>.
+
+Self‑Check
+[ ] Scenario parsed, roles extracted/defaulted, DB chosen
+[ ] RBAC fully implemented (middleware, role field, seed, frontend)
+[ ] All mandatory pages + reports, no missing files
+[ ] Toasts, inline errors, Poppins font, product name everywhere
+[ ] Landing “How It Works”, no dark mode
+[ ] CRUD/RBAC enforced backend & frontend
+[ ] Schema.sql phpMyAdmin‑ready if MySQL
+[ ] Recovery codes, validation both ends
+[ ] Seed users with roles, tests included
+[ ] Documentation sections present
+
+Scenario: [Paste here]
+BEGIN GENERATION – code + docs as Gahire Abdilillah.
