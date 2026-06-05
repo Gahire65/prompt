@@ -1,0 +1,463 @@
+## 👤 DEVELOPER INFORMATION
+- Full Name: **Gahire Abdilillah** (appears in footer and developer credits)
+- Date: `{{CURRENT_DATE}}`
+
+## 🧠 ABSOLUTE CORE INSTRUCTION – DYNAMIC SCENARIO PARSING (VERSION 2 – MONGOOSE)
+You will be given an **exam scenario** below. You have no prior knowledge of its content.  
+**You must dynamically generate a complete, production‑ready web application that exactly matches the scenario.**
+
+**This version forces MongoDB + Mongoose as the database.**  
+*Do not generate MySQL, SQL files, or phpMyAdmin exports.*
+
+### Step 1 – Parse the scenario to extract:
+- **Entities** (e.g., SparePart, StockIn, StockOut) and their **attributes** with data types (String, Number, Date, etc.)
+- **Primary keys** (usually `id`) and **foreign keys** (e.g., `spare_part_id` in StockOut)
+- **Relationships** (one‑to‑many, many‑to‑many) – infer from foreign keys
+- **Auto‑calculation rules** (e.g., “TotalPrice = Quantity × UnitPrice”)
+- **Stock/availability logic** – if an entity has a `quantity` field and another entity records usage (e.g., StockOut), implement automatic stock updates (decrement on usage, increment on delete/update)
+- **CRUD permissions** – detect exact phrases like:
+  - *“Insert operation should be used on all forms (X, Y, Z)”*
+  - *“Delete, update, retrieve operations should only be used on W form”*
+  - *“No edit/delete for A”*
+  - If not specified, assume **full CRUD** (Create, Read, Update, Delete) for all entities.
+- **Authentication requirement** – **Use the authentication method explicitly required by the scenario. If unspecified, use jwt authentication.**  
+  Look for *“session based login”*, *“express‑session”*, or *“session”* → implement `express-session`.  
+  Look for *“JWT”*, *“token”*, or nothing → implement JWT.
+- **Report requirements** – look for *“daily stock status”*, *“daily StockOut report”*, or any other named reports. **You must generate exactly those reports with the exact wording as described in the scenario.**
+
+---
+
+## 🧠 SYSTEM COMPLETENESS ENGINE (CRITICAL)
+
+The AI must **NEVER** generate only the entities explicitly mentioned.  
+The AI must **automatically generate ALL supporting infrastructure** required for a complete working system.
+
+For **every** scenario generate:
+
+### PUBLIC AREA
+- LandingPage
+- Login
+- Register / Create Account
+- Forgot Password
+- Unauthorized Page
+- 404 Page
+
+### AUTH AREA
+- Authentication system (JWT **or** session, exactly as parsed)
+- Password hashing (bcrypt)
+- User session/JWT handling
+- Logout system
+- Protected routes
+- Role middleware (if required)
+
+### ADMIN AREA
+- Dashboard
+- Sidebar
+- Navbar
+- Footer
+- Profile Page
+- Settings Page
+- Reports Page
+
+### SYSTEM AREA
+- Loading states
+- Error pages
+- Validation messages
+- Toast notifications
+- Confirmation modals
+- Axios configuration (token interceptor **or** `withCredentials` for session)
+- Environment files
+- Database connection (MongoDB with Mongoose)
+- Seed system
+
+### ROUTING AREA
+- All routes
+- Protected routes
+- Fallback routes
+- 404 routes
+
+### DATABASE AREA
+- **Users collection**  
+  The Users entity **must always exist** whenever login is required.  
+  User entity must never be forgotten.  
+  **Required fields:** `id`, `username`, `password`, `createdAt`  
+  **Optional:** `role`, `email`, `recoveryCodes`
+
+### REPORT AREA
+- Generate dedicated report pages.
+- Never place reports inside dashboard only.
+- Every report must have: API endpoint, Controller, Route, Frontend page, Navigation item.
+
+### NAVIGATION VALIDATION
+Before output generation **verify**:
+- ✓ Every page has a route
+- ✓ Every route has navigation access
+- ✓ Every navigation item has a page
+- ✓ Every page has backend support
+- ✓ Every backend endpoint has frontend consumer
+- ✓ Every entity has forms
+- ✓ Every form has validation
+- ✓ Every report has MongoDB query
+- ✓ Every authentication screen exists
+- ✓ Landing page exists
+- ✓ Dashboard exists
+- ✓ Login exists
+- ✓ Register exists
+- ✓ Logout exists
+- ✓ Forgot password exists
+- ✓ 404 page exists
+- ✓ ProtectedRoute exists
+
+**If any item is missing → REGENERATE BEFORE OUTPUT.**
+
+---
+
+## 🚨 FILE COMPLETENESS AUDIT
+
+Before generating code create an internal checklist.  
+For every file verify:
+- Page exists
+- Route exists
+- Controller exists
+- Model exists (Mongoose schema)
+- Validation exists
+- Navigation exists
+
+**If one file is missing → STOP → Generate the missing file first.**  
+Never output incomplete structures.
+
+---
+
+## 🚨 EXAM MARKS PROTECTION ENGINE
+
+Assume the examiner deducts marks for:
+- Missing page
+- Missing route
+- Missing navigation link
+- Missing report
+- Missing login feature
+- Missing registration feature
+- Missing dashboard feature
+- Missing validation
+- Missing authentication
+
+Generate these **automatically** even when not explicitly mentioned, **unless forbidden by the scenario**.  
+This guarantees no marks lost.
+
+With those additions, the AI will not forget:
+- LandingPage.jsx
+- Register.jsx
+- Create Account flow
+- ForgotPassword.jsx
+- Dashboard.jsx
+- Profile.jsx
+- ProtectedRoute.jsx
+- 404.jsx
+- Sidebar links
+- Navbar links
+- Report routes
+- Auth routes
+- Seed admin account
+- User model
+- User CRUD dependencies
+
+---
+
+## Step 2 – Generate backend with this **exact structure** (Mongoose + MongoDB)
+backend-project/
+├── package.json (with "type": "module")
+├── .env.example
+├── server.js
+├── config/
+│ └── db.js (Mongoose connection – exactly as in your example)
+├── models/
+│ ├── User.js (username, password, bcrypt, recoveryCodes)
+│ ├── [Entity1].js
+│ ├── [Entity2].js
+│ └── [Entity3].js
+├── controllers/
+│ ├── authController.js (register, login, forgotPassword – JWT based, like your example; if session, adapt)
+│ ├── [entity1]Controller.js
+│ ├── [entity2]Controller.js
+│ ├── [entity3]Controller.js
+│ └── reportController.js
+├── routes/
+│ ├── authRoutes.js (POST /register, /login, /forgot-password)
+│ ├── [entity1]Routes.js
+│ ├── [entity2]Routes.js
+│ ├── [entity3]Routes.js
+│ └── reportRoutes.js
+├── middleware/
+│ ├── authMiddleware.js (JWT Bearer verification – exactly as your example; if session, check req.session.userId)
+│ └── validationMiddleware.js
+├── utils/
+│ ├── validators.js
+│ ├── recoveryCodes.js (generate 5 codes XXXX-XXXX, hash with bcrypt)
+│ └── stockUpdater.js
+├── seed.js (populates admin user + sample data)
+└── tests/
+└── stockUpdate.test.js (validation logic for stock updates)
+
+text
+
+**Important:**  
+- Use `mongoose` with MongoDB.  
+- `authController.js` must match your example: `register`, `login`, `forgotPassword` using JWT (`generateToken`) **unless scenario explicitly requires session**. If session, use `express-session`, no token.  
+- `authMiddleware.js` for JWT: verify Bearer token; for session: check `req.session.userId`.  
+- Frontend `axios.js` interceptor: for JWT attach token from localStorage; for session use `withCredentials: true` only.
+
+---
+
+## Step 3 – Generate frontend (React + Vite + Tailwind CSS v4) with:
+- **Icons:** lucide-react
+- **Routing:** react-router-dom
+- **HTTP:** axios (interceptor as described)
+- **Styling:** Tailwind CSS v4 (light theme only, **no dark mode**)
+- **Folder structure:**
+frontend-project/
+├── package.json
+├── vite.config.js
+├── tailwind.config.js
+├── index.css
+├── main.jsx
+├── App.jsx
+├── components/
+│ ├── Layout.jsx (Sidebar + Navbar + Footer)
+│ ├── Sidebar.jsx
+│ ├── Navbar.jsx
+│ ├── Footer.jsx
+│ ├── Modal.jsx
+│ ├── AlertBanner.jsx
+│ └── ProtectedRoute.jsx
+├── pages/
+│ ├── LandingPage.jsx (large, impressive – see below)
+│ ├── Login.jsx
+│ ├── Register.jsx (recovery codes modal with copy/download)
+│ ├── ForgotPassword.jsx
+│ ├── Dashboard.jsx
+│ ├── Profile.jsx
+│ ├── Unauthorized.jsx
+│ ├── NotFound.jsx (404)
+│ ├── [Entity1]List.jsx (only if RETRIEVE allowed)
+│ ├── [Entity1]Create.jsx (only if INSERT allowed)
+│ ├── [Entity1]Edit.jsx (only if UPDATE allowed)
+│ ├── [Entity2]List.jsx
+│ ├── [Entity2]Create.jsx
+│ ├── [Entity3]List.jsx
+│ ├── [Entity3]Create.jsx
+│ ├── [Entity3]Edit.jsx (if UPDATE allowed)
+│ └── Report.jsx (exact named reports, CSV export)
+├── services/
+│ └── api.js (axios instance)
+└── utils/
+└── formatters.js
+
+text
+
+---
+
+## ⚠️ STRICT CRUD ENFORCEMENT (2 marks each violation avoided)
+
+**Rule: STRICTLY enforce CRUD permissions exactly as written in the scenario.  
+Never generate update/delete routes, controllers, buttons, or pages for entities where they are forbidden.**
+
+- For each entity, the AI must mark a permission map:  
+  `{ insert: true/false, retrieve: true/false, update: true/false, delete: true/false }` based on scenario phrases.
+- Backend: Do **not** create `PUT` or `DELETE` endpoints for forbidden operations. If a request arrives, return `403 Forbidden`.
+- Frontend: Do **not** render Edit/Delete buttons in list views, and do **not** create edit/delete routes (`<Route>`).
+- **Example:** If scenario says *“Insert operation only on SparePart, StockIn, StockOut; Delete, update, retrieve only on StockOut”*, then:
+  - SparePart: only `POST /api/sparepart` (no GET, no PUT, no DELETE)
+  - StockIn: only `POST /api/stockin`
+  - StockOut: full CRUD (GET, POST, PUT, DELETE)
+  - Frontend: SparePart has a Create form but no list page; StockOut has full list with edit/delete.
+
+---
+
+## ✅ VALIDATION RULES (2 marks each – implement ALL)
+
+| Field Type         | Rule                                                                                          |
+|--------------------|-----------------------------------------------------------------------------------------------|
+| **Name** (any field with “name” in key) | Letters + single spaces only, 2‑50 chars. Regex: `/^[A-Za-z]+( [A-Za-z]+)*$/` |
+| **Username**       | 3‑20 chars, letters/numbers/underscore only. `/^[a-zA-Z0-9_]+$/`                             |
+| **Password**       | min 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char.                             |
+| **Integer**        | Non‑negative integer (`>=0`, integer).                                                       |
+| **Money (RWF)**    | Integer ≥0, display with `.toLocaleString()` + " RWF".                                       |
+| **Date**           | Valid date string (required).                                                                |
+| **Trim & Sanitise** | Every string: trim, strip HTML, collapse spaces.                                             |
+| **Phone (if exists)** | Rwandan: `078/079/072/073` + 7 digits.                                                   |
+| **Plate (if exists)** | Rwanda plate: `/^[A-Z]{1,3} \d{1,4}( [A-Z])?$/`                                         |
+
+---
+
+## 🔐 AUTHENTICATION & RECOVERY CODES (JWT by default, session if required)
+
+- **Register**: bcrypt password (salt 10), generate 5 recovery codes (`XXXX-XXXX`). Store hashed codes in DB (add `recoveryCodes: [{ code: String, used: Boolean }]` to User model). Return raw codes in response → frontend modal with copy/download.
+- **Login**: 
+  - If JWT: returns JWT token (expires 7d) – exactly as in your `authController.js`.
+  - If session: creates `req.session.userId` and returns user object (no token).
+- **Forgot Password**: username, recovery code, new password. Verify code not used, mark used, update password.
+- **Logout**: 
+  - JWT: frontend removes token from localStorage.
+  - Session: frontend calls `/api/auth/logout` which destroys session.
+- **JWT secret** from `.env` (for JWT mode).
+
+---
+
+## 📊 REPORT PAGE (MANDATORY – with verification)
+
+- **Generate exactly the reports named in the scenario** (e.g., “daily stock status”, “daily StockOut report”).  
+- **Verify that generated reports match scenario wording** – column names, date range, grouping, and calculations must align with what the scenario describes.  
+- Each report fetched from custom endpoint (`/api/report/stock-status`, `/api/report/stockout`).  
+- CSV export button for each report (using `react-csv` or manual blob).  
+- **Report calculation explanation** must be provided in the output documentation, showing how the scenario wording translates into aggregation logic.
+
+---
+
+## 🧪 STOCK UPDATE VALIDATION LOGIC (Tests or validation scripts)
+
+**Requirement:** Generate tests or validation logic proving that stock quantity updates correctly after StockIn, StockOut, Update, and Delete operations (respecting CRUD permissions).
+
+- Create a file `backend-project/tests/stockUpdate.test.js` (using Jest or a simple validation script that can be run with Node).  
+- The tests must:
+  - Create a spare part with initial quantity.
+  - Perform a StockIn (insert) → verify quantity increased by StockInQuantity.
+  - Perform a StockOut (insert) → verify quantity decreased by StockOutQuantity.
+  - If UPDATE allowed on StockOut: change StockOutQuantity → verify quantity adjusts correctly (old quantity added back, new quantity subtracted).
+  - If DELETE allowed on StockOut: delete a StockOut record → verify quantity increased by that StockOutQuantity.
+  - Also test that when a StockOut is created with quantity exceeding available stock, the operation fails with an error (validation).
+- If the scenario forbids update/delete on StockOut, skip those tests but document that they are not applicable.
+- Provide instructions on how to run the tests (`npm test` or `node tests/stockUpdate.test.js`).
+
+---
+
+## 🎨 UI/UX REQUIREMENTS (Responsive + Animations + LARGE LANDING PAGE)
+
+### LANDING PAGE – LARGE, IMPRESSIVE “HOW IT WORKS” STYLE
+The **LandingPage** must be a full, multi‑section page that demonstrates exactly **how the website is done** and what the system does.  
+**No pros/cons list.** Instead, include the following sections (all with beautiful animations):
+
+1. **Hero Section**  
+   - Large heading with system name (derived from scenario).  
+   - Subheading: a one‑line powerful description.  
+   - “Get Started” (→ Register) and “Login” buttons.  
+   - Background gradient or subtle pattern, with fade‑in animation.
+
+2. **How It Works Section**  
+   - A step‑by‑step guide (3‑4 steps) showing the core workflow of the system (e.g., “1. Register → 2. Add Spare Parts → 3. Record Stock In/Out → 4. Generate Reports”).  
+   - Use icons (lucide-react), numbers, and short descriptions.  
+   - Animate steps on scroll (fade‑up).
+
+3. **Features Section**  
+   - Cards highlighting the main features (extracted from the scenario: CRUD operations, stock management, authentication, reports, etc.).  
+   - Each card has an icon, title, and brief explanation.  
+   - Hover effect (scale + shadow).
+
+4. **Why This System? Section**  
+   - Explain the value proposition: efficiency, accuracy, time‑saving, etc. (based on the scenario’s problem).  
+   - Use a two‑column layout with icons.
+
+5. **Testimonials / Trust Section (optional but recommended)**  
+   - Simple fake testimonial cards or a “Trusted by” bar with logos (just placeholder text, e.g., “Used by Kigali Workshops”).
+
+6. **Call‑to‑Action**  
+   - Another “Ready to get started?” banner with a registration button.
+
+7. **Footer**  
+   - Developer name: **Gahire Abdilillah** and the current year.
+
+All sections must be **fully responsive** (Tailwind breakpoints). Use **fade‑in**, **slide‑up**, **hover scale**, and **smooth transitions** throughout. No dark mode.
+
+### DASHBOARD & ADMIN PAGES
+- **Sidebar** (full height, fixed on desktop, collapsible on mobile): user avatar, username, role “Administrator”, links to allowed list pages, Reports, logout (red).
+- **Navbar**: system name (left), welcome message (right desktop), hamburger (mobile). No dark mode.
+- **Dashboard**: welcome card + recent items from the most important entity (last 5) + stock alerts if quantity < 5.
+- **Forms**: live validation, auto‑calculation (e.g., total = quantity × unit price).
+- **List views**: table with action buttons only for allowed operations. Delete confirmation modal.
+- **AlertBanner**: auto‑dismiss after 5 seconds.
+
+---
+
+## 🌱 SEED FILE (`backend-project/seed.js`)
+
+Must insert:
+- Admin user: username `admin`, password `Admin123!` (hashed automatically by User model pre‑save).
+- Sample data for each entity (2‑3 records) respecting foreign keys (e.g., StockIn and StockOut reference existing SparePart).
+- Use async/await, log results.
+
+---
+
+## 📄 ADDITIONAL REQUIRED OUTPUTS (for exam assessment)
+
+Your final answer must include the following **clearly labelled sections** **in addition** to the code:
+
+### 1. Full panel presentation script
+A script (2‑3 minutes) that a candidate would say when presenting the project to assessors. It must include:
+- Product name and brief description.
+- Key steps of the process (SDLC summary).
+- Use/function/importance of the product.
+- Challenges met and how they were overcome.
+
+### 2. SDLC explanation
+Explain which SDLC model was used (e.g., Agile – Scrum) and justify why. Describe each phase: Planning → Analysis → Design → Implementation → Testing → Deployment → Maintenance, with specific references to the generated project.
+
+### 3. Frontend explanation
+Describe the frontend architecture: React components, state management (useState, useEffect), routing (react-router-dom), API integration (axios interceptor), Tailwind CSS, responsive design, animations, and how CRUD permissions are enforced in the UI. Include the structure of the large landing page.
+
+### 4. Backend workflow explanation
+Explain the backend workflow: Express.js server, MongoDB schema design (Mongoose), authentication method (JWT or session) as chosen, middleware (auth, validation), controllers, RESTful endpoints, and how CRUD permissions are enforced at route/controller level.
+
+### 5. Report calculation explanation
+For each generated report, explain:
+- Which entities/tables are involved.
+- How the scenario wording was used to derive column names and aggregations.
+- The actual aggregation logic (e.g., `SUM(StockOutQuantity) GROUP BY spare_part_id`).
+- How the data is fetched from the database and sent to the frontend.
+
+### 6. Strict enforcement of scenario CRUD rules
+A table listing each entity and the allowed operations (insert/retrieve/update/delete) as parsed from the scenario, with a brief justification.
+
+### 7. Exam time‑priority instructions
+A short guide for the candidate (or for the AI itself) on how to prioritise tasks during the 7‑hour exam:
+- What to build first (database → backend → frontend).
+- Which features are mandatory (validation, reports, CRUD permissions, stock tests).
+- How to handle unexpected scenario requirements.
+
+### 8. Stock update validation logic report
+Summarise the tests/validation logic generated in `tests/stockUpdate.test.js` and explain how they prove the correctness of stock updates for StockIn, StockOut, Update, and Delete operations (where permitted).
+
+---
+
+## ✅ SELF-CHECK FOR AI (must verify before output)
+
+- [ ] Parsed scenario to extract entities, attributes, CRUD permissions, stock logic, report names.
+- [ ] Authentication method selected based on scenario: JWT (default) or session.
+- [ ] Backend files match the exact style of your provided `authController.js`, `authMiddleware.js`, `db.js`, `User.js`, `authRoutes.js`, `axios.js` (with adaptations for session if required).
+- [ ] **No MySQL, no SQL files, no phpMyAdmin – strictly Mongoose/MongoDB.**
+- [ ] CRUD permissions strictly enforced: no extra endpoints or UI buttons.
+- [ ] Seed.js creates admin + sample data.
+- [ ] **Reports exactly match scenario wording** – columns and aggregations verified.
+- [ ] **Stock update tests/validation** created in `tests/stockUpdate.test.js` covering StockIn, StockOut, Update, Delete (where allowed).
+- [ ] Frontend uses Tailwind v4, lucide-react, react-router-dom, axios interceptor (or `withCredentials` for session).
+- [ ] **Landing page is large, multi‑section, with “How It Works”, features, and no pros/cons.**
+- [ ] No dark mode anywhere.
+- [ ] All validation rules applied both ends.
+- [ ] Recovery codes modal with copy/download.
+- [ ] Report page has two reports + CSV export.
+- [ ] Presentation script, SDLC, frontend/backend workflow, report calculation, time‑priority instructions, and validation summary are included as text sections **outside** the code blocks.
+- [ ] **SYSTEM COMPLETENESS ENGINE**: every area (PUBLIC, AUTH, ADMIN, SYSTEM, ROUTING, DATABASE, REPORT, NAVIGATION) fully generated.
+- [ ] **FILE COMPLETENESS AUDIT** checklist passed – no missing files.
+- [ ] **EXAM MARKS PROTECTION** – no missing critical features.
+- [ ] No placeholders – every file is complete and runnable.
+
+---
+
+## 📄 SCENARIO (PASTE YOURS HERE – AI WILL PARSE DYNAMICALLY)
+
+**[Paste the full exam scenario text here. Example: The SIMS scenario from your original PDF – but any scenario works.]**
+
+---
+
+## 🚀 BEGIN GENERATION
+
+Produce a single answer containing **all of the above** – code files **and** documentation sections.  
+Build as **Gahire Abdilillah**.
