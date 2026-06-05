@@ -1,0 +1,114 @@
+Developer: Gahire Abdilillah | Date: {{CURRENT_DATE}}
+Strictly MongoDB + Mongoose. Parse scenario dynamically – extract entities, attributes, relationships, auto‑calc, stock logic, CRUD permissions, auth method (JWT unless “session”→express‑session), report names. Product name from scenario – show on all pages.
+
+System Completeness (always auto‑generate)
+Public: LandingPage, Login, Register, ForgotPassword, Unauthorized, 404.
+
+Auth: bcrypt, JWT/session, logout, protected routes.
+
+Admin: Dashboard, Sidebar, Navbar, Footer, Profile, Settings, Reports.
+
+System: loading/error states, toast (react-hot-toast) after every action, inline input errors (red border+msg), confirmation modals, axios interceptor (JWT header; session withCredentials), .env, DB connect, seed.
+
+Routing: all routes, protected, 404.
+
+Database: Users collection (id,username,password,createdAt; opt: role,email,recoveryCodes). Every entity gets forms & routes per CRUD.
+
+Reports: MANDATORY – dedicated page + API/controller/route/nav, CSV export.
+
+Navigation audit: every page↔route↔link exists.
+
+File audit: missing file → stop, generate it first.
+
+Database: MongoDB + Mongoose (NO MySQL, NO SQL)
+Backend structure:
+
+text
+backend/
+├── server.js, .env, package.json
+├── config/db.js (Mongoose connection)
+├── models/ (User, Entity1, Entity2, Entity3)
+├── controllers/ (auth, entities, report)
+├── routes/ (auth, entities, report)
+├── middleware/ (auth, validation)
+├── utils/ (validators, recoveryCodes, stockUpdater)
+├── seed.js
+└── tests/stockUpdate.test.js
+Auth: register → 5 recovery codes (hash stored, raw returned → modal copy/download). Login → JWT (7d) or session. Forgot password → username+code+newPwd, mark code used.
+
+Middleware: JWT Bearer; session req.session.userId.
+
+Frontend (React+Vite+Tailwind v4)
+Icons: lucide-react, routing: react-router-dom, http: axios.
+
+Font: Google Font “Poppins” (or “Outfit”) – no default sans-serif.
+
+Components: Layout (Sidebar+Navbar+Footer), ProtectedRoute, Modal, AlertBanner.
+
+Pages: Landing (large “How It Works”, no pros/cons), Login, Register, ForgotPwd, Dashboard, Profile, Unauthorized, NotFound, EntityList/Create/Edit (only if CRUD allowed), Report (exact named + CSV export).
+
+UI rules: no dark mode, responsive, animations, product name on Navbar/Sidebar/Hero/Footer. Toast after every action, inline input errors.
+
+CRUD Enforcement
+Forbidden → backend 403, frontend hide buttons/routes.
+
+Validation (both ends)
+Name: /^[A-Za-z]+( [A-Za-z]+)*$/ 2‑50; Username: /^[a-zA-Z0-9_]+$/ 3‑20; Password: min8 upper+lower+digit+special; Integer ≥0; Money: int≥0 display .toLocaleString()+" RWF"; Date required; Trim/sanitize; Phone (if exists): 078/079/072/073+7digits; Plate (if exists): /^[A-Z]{1,3} \d{1,4}( [A-Z])?$/.
+
+Landing Page (large, no pros/cons)
+Hero (system name, subtitle, buttons, fade‑in)
+
+How It Works (3‑4 steps, icons, scroll fade‑up)
+
+Feature cards (hover scale)
+
+Why This System? (two‑col, icons)
+
+Trust/Testimonials (optional)
+
+Call‑to‑action
+
+Footer (Gahire Abdilillah, year)
+
+Seed
+admin/Admin123! (hashed) + 2‑3 sample records per entity.
+
+Tests
+tests/stockUpdate.test.js – create part, stock in/out, update/delete (if allowed), reject over‑consumption.
+
+Documentation (outside code)
+Presentation script (2‑3 min)
+
+SDLC explanation
+
+Frontend explanation (toast, inline errors, Poppins)
+
+Backend workflow (Mongoose)
+
+Report calculation
+
+CRUD permissions table
+
+Exam time‑priority
+
+Stock validation summary
+
+Output Format
+After every file code block, add a comment: // Purpose: <one-line description>.
+
+Self‑Check
+[ ] Entities/CRUD/stock/reports parsed
+[ ] MongoDB + Mongoose, no SQL
+[ ] Auth method obeyed, recovery codes
+[ ] All mandatory pages + reports
+[ ] Toasts, inline errors, Poppins font
+[ ] Product name everywhere
+[ ] Landing “How It Works”
+[ ] No dark mode, all validation
+[ ] File audit passed
+[ ] Seed + tests included
+[ ] Documentation sections
+[ ] No placeholders
+
+Scenario: [Paste here]
+BEGIN GENERATION – code + docs as Gahire Abdilillah.
